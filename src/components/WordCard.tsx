@@ -6,16 +6,13 @@ interface WordCardProps {
   entry: WordEntry;
   showPinyin: boolean;
   showKorean: boolean;
-  showPatterns: boolean;
 }
 
 export default function WordCard({
   entry,
   showPinyin,
   showKorean,
-  showPatterns,
 }: WordCardProps) {
-  const hasPatterns = entry.patterns.length > 0 || entry.learningPoints.length > 0;
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
@@ -73,45 +70,6 @@ export default function WordCard({
         ))}
       </div>
 
-      {/* Patterns & Learning Points */}
-      {hasPatterns && showPatterns && (
-        <div className="mt-8 rounded-lg border border-gray-100 bg-gray-50/50 p-4 dark:border-slate-700 dark:bg-slate-800/50">
-          {entry.patterns.length > 0 && (
-            <div className="mb-3">
-              <h3 className="mb-1.5 text-sm font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                자주 쓰는 패턴
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {entry.patterns.map((p, i) => (
-                  <span
-                    key={i}
-                    className="rounded-full bg-indigo-50 px-3 py-1 text-base text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-300"
-                  >
-                    {p}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-          {entry.learningPoints.length > 0 && (
-            <div>
-              <h3 className="mb-1.5 text-sm font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                학습 포인트
-              </h3>
-              <ul className="space-y-1">
-                {entry.learningPoints.map((lp, i) => (
-                  <li
-                    key={i}
-                    className="text-base leading-relaxed text-gray-600 dark:text-gray-400"
-                  >
-                    {lp}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }

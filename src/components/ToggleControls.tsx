@@ -26,7 +26,7 @@ export default function ToggleControls({
           onChange={onTogglePinyin}
           className="h-4 w-4 accent-indigo-500"
         />
-        <span className="text-gray-700 dark:text-gray-300">병음</span>
+        <span className="text-gray-700 dark:text-gray-300">pinyin</span>
       </label>
       <label className="flex cursor-pointer items-center gap-2 text-base select-none">
         <input

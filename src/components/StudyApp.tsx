@@ -26,7 +26,6 @@ export default function StudyApp({ words }: StudyAppProps) {
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
   }, []);
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") {
@@ -41,7 +40,6 @@ export default function StudyApp({ words }: StudyAppProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [goNext, goPrev]);
 
-  // Touch swipe handlers
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -65,10 +63,11 @@ export default function StudyApp({ words }: StudyAppProps) {
   }
 
   const entry = words[currentIndex];
+  const hasPatterns = entry.patterns.length > 0 || entry.learningPoints.length > 0;
 
   return (
     <div
-      className="flex min-h-screen flex-col"
+      className="min-h-screen flex flex-col"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
@@ -81,14 +80,55 @@ export default function StudyApp({ words }: StudyAppProps) {
         onTogglePatterns={() => setShowPatterns((v) => !v)}
       />
 
-      <main className="pt-20 pb-20 px-4">
-        <div key={currentIndex} className="animate-fadeIn">
-          <WordCard
-            entry={entry}
-            showPinyin={showPinyin}
-            showKorean={showKorean}
-            showPatterns={showPatterns}
-          />
+      <main className="flex flex-1 items-center justify-center py-20 px-6">
+        {/* Wrapper: relative so the panel can absolute-position outside it */}
+        <div className="relative w-full max-w-2xl">
+
+          {/* Patterns panel — absolutely outside the wrapper to the left, never shifts word card */}
+          {showPatterns && hasPatterns && (
+            <div className="absolute right-full top-1/2 -translate-y-1/2 mr-1 w-72 rounded-lg border border-gray-200 bg-white/90 p-5 shadow-md backdrop-blur-sm dark:border-slate-700 dark:bg-slate-800/90">
+              {entry.patterns.length > 0 && (
+                <div className="mb-4">
+                  <h3 className="mb-2 text-sm font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                    패턴
+                  </h3>
+                  <div className="flex flex-col gap-2">
+                    {entry.patterns.map((p, i) => (
+                      <span
+                        key={i}
+                        className="rounded-md bg-indigo-50 px-3 py-1.5 text-xl text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-300"
+                      >
+                        {p}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {entry.learningPoints.length > 0 && (
+                <div>
+                  <h3 className="mb-2 text-sm font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                    학습 포인트
+                  </h3>
+                  <ul className="space-y-2">
+                    {entry.learningPoints.map((lp, i) => (
+                      <li key={i} className="text-base leading-relaxed text-gray-600 dark:text-gray-400">
+                        {lp}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Word card — always same position */}
+          <div key={currentIndex} className="animate-fadeIn">
+            <WordCard
+              entry={entry}
+              showPinyin={showPinyin}
+              showKorean={showKorean}
+            />
+          </div>
         </div>
       </main>
 
