@@ -10,13 +10,18 @@ interface StudyAppProps {
 }
 
 export default function StudyApp({ words }: StudyAppProps) {
+  const [shuffled, setShuffled] = useState(words);
+
+  useEffect(() => {
+    setShuffled([...words].sort(() => Math.random() - 0.5));
+  }, []);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showPinyin, setShowPinyin] = useState(false);
   const [showKorean, setShowKorean] = useState(false);
   const [showPatterns, setShowPatterns] = useState(false);
   const touchStartX = useRef<number | null>(null);
 
-  const total = words.length;
+  const total = shuffled.length;
 
   const goNext = useCallback(() => {
     setCurrentIndex((prev) => Math.min(prev + 1, total - 1));
@@ -62,7 +67,7 @@ export default function StudyApp({ words }: StudyAppProps) {
     );
   }
 
-  const entry = words[currentIndex];
+  const entry = shuffled[currentIndex];
   const hasPatterns = entry.patterns.length > 0 || entry.learningPoints.length > 0;
 
   return (
