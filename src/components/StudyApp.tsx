@@ -94,14 +94,14 @@ export default function StudyApp({ words }: StudyAppProps) {
             <div className="absolute right-full top-1/2 -translate-y-1/2 mr-1 w-72 rounded-lg border border-gray-200 bg-white/90 p-5 shadow-md backdrop-blur-sm dark:border-slate-700 dark:bg-slate-800/90">
               {entry.patterns.length > 0 && (
                 <div className="mb-4">
-                  <h3 className="mb-2 text-sm font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                  <h3 className="mb-2 text-[1rem] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
                     패턴
                   </h3>
                   <div className="flex flex-col gap-2">
                     {entry.patterns.map((p, i) => (
                       <span
                         key={i}
-                        className="rounded-md bg-indigo-50 px-3 py-1.5 text-xl text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-300"
+                        className="rounded-md bg-indigo-50 px-3 py-1.5 text-[1.44rem] text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-300"
                       >
                         {p}
                       </span>
@@ -111,12 +111,12 @@ export default function StudyApp({ words }: StudyAppProps) {
               )}
               {entry.learningPoints.length > 0 && (
                 <div>
-                  <h3 className="mb-2 text-sm font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                  <h3 className="mb-2 text-[1rem] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
                     학습 포인트
                   </h3>
                   <ul className="space-y-2">
                     {entry.learningPoints.map((lp, i) => (
-                      <li key={i} className="text-base leading-relaxed text-gray-600 dark:text-gray-400">
+                      <li key={i} className="text-[1.15rem] leading-relaxed text-gray-600 dark:text-gray-400">
                         {lp}
                       </li>
                     ))}
