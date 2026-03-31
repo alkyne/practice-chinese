@@ -91,7 +91,7 @@ export default function StudyApp({ words }: StudyAppProps) {
 
           {/* Patterns panel — absolutely outside the wrapper to the left, never shifts word card */}
           {showPatterns && hasPatterns && (
-            <div className="absolute right-full top-1/2 -translate-y-1/2 mr-1 w-72 rounded-lg border border-gray-200 bg-white/90 p-5 shadow-md backdrop-blur-sm dark:border-slate-700 dark:bg-slate-800/90">
+            <div className="absolute right-full top-1/2 -translate-y-1/2 -mr-20 w-80 rounded-lg border border-gray-200 bg-white/90 p-5 shadow-md backdrop-blur-sm dark:border-slate-700 dark:bg-slate-800/90">
               {entry.patterns.length > 0 && (
                 <div className="mb-4">
                   <h3 className="mb-2 text-[1rem] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">

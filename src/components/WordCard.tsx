@@ -22,7 +22,7 @@ export default function WordCard({
           {entry.word}
         </h1>
         <p
-          className={`mt-2 text-xl transition-opacity duration-200 ${
+          className={`mt-0.5 text-[1.5rem] transition-opacity duration-200 ${
             showPinyin
               ? "text-indigo-500 dark:text-indigo-400"
               : "text-transparent select-none"
@@ -45,11 +45,11 @@ export default function WordCard({
       <div className="space-y-6">
         {entry.examples.map((ex, i) => (
           <div key={i} className="text-center">
-            <p className="text-[1.44rem] text-gray-800 dark:text-gray-100 sm:text-[1.725rem]">
+            <p className="text-[1.584rem] text-gray-800 dark:text-gray-100 sm:text-[1.898rem]">
               {ex.chinese}
             </p>
             <p
-              className={`mt-1 text-base transition-opacity duration-200 ${
+              className={`mt-1 text-[1.32rem] transition-opacity duration-200 ${
                 showPinyin
                   ? "text-indigo-400 dark:text-indigo-300"
                   : "text-transparent select-none"
@@ -58,7 +58,7 @@ export default function WordCard({
               {ex.pinyin}
             </p>
             <p
-              className={`mt-0.5 text-base transition-opacity duration-200 ${
+              className={`mt-0.5 text-[1.1rem] transition-opacity duration-200 ${
                 showKorean
                   ? "text-gray-400 dark:text-gray-500"
                   : "text-transparent select-none"
