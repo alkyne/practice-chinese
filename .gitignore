@@ -36,6 +36,9 @@ yarn-error.log*
 # claude code
 .claude/
 
+# static html (local only)
+public/cs.html
+
 # vercel
 .vercel
 
