@@ -1,20 +1,30 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { WordEntry } from "@/lib/types";
+import { CSVFile } from "@/lib/types";
 import WordCard from "./WordCard";
 import ToggleControls from "./ToggleControls";
 
 interface StudyAppProps {
-  words: WordEntry[];
+  csvFiles: CSVFile[];
 }
 
-export default function StudyApp({ words }: StudyAppProps) {
+export default function StudyApp({ csvFiles }: StudyAppProps) {
+  const [selectedFileIndex, setSelectedFileIndex] = useState(0);
+  const words = csvFiles[selectedFileIndex]?.words ?? [];
   const [shuffled, setShuffled] = useState(words);
 
   useEffect(() => {
     setShuffled([...words].sort(() => Math.random() - 0.5));
   }, []);
+
+  const handleFileChange = useCallback((index: number) => {
+    setSelectedFileIndex(index);
+    const newWords = csvFiles[index]?.words ?? [];
+    setShuffled([...newWords].sort(() => Math.random() - 0.5));
+    setCurrentIndex(0);
+  }, [csvFiles]);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showPinyin, setShowPinyin] = useState(false);
   const [showKorean, setShowKorean] = useState(false);
@@ -59,7 +69,7 @@ export default function StudyApp({ words }: StudyAppProps) {
     touchStartX.current = null;
   };
 
-  if (total === 0) {
+  if (csvFiles.length === 0 || total === 0) {
     return (
       <div className="flex min-h-screen items-center justify-center text-gray-400">
         CSV 파일을 words_csv 폴더에 넣어주세요.
@@ -83,6 +93,10 @@ export default function StudyApp({ words }: StudyAppProps) {
         onTogglePinyin={() => setShowPinyin((v) => !v)}
         onToggleKorean={() => setShowKorean((v) => !v)}
         onTogglePatterns={() => setShowPatterns((v) => !v)}
+        csvFiles={csvFiles}
+        selectedFileIndex={selectedFileIndex}
+        onSelectFile={handleFileChange}
+        wordCount={shuffled.length}
       />
 
       <main className="flex flex-1 items-center justify-center py-20 px-6">

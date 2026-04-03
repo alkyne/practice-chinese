@@ -1,3 +1,8 @@
+export interface CSVFile {
+  name: string;
+  words: WordEntry[];
+}
+
 export interface WordEntry {
   number: number;
   word: string;

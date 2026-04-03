@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Papa from "papaparse";
-import { WordEntry } from "./types";
+import { WordEntry, CSVFile } from "./types";
 
 const COLUMN_MAP: Record<string, string> = {
   "번호": "number",
@@ -25,15 +25,7 @@ const COLUMN_MAP: Record<string, string> = {
   "학습포인트2": "learningPoint2",
 };
 
-export function parseCSV(): WordEntry[] {
-  const csvDir = path.join(process.cwd(), "words_csv");
-  const files = fs.readdirSync(csvDir).filter((f) => f.endsWith(".csv"));
-
-  if (files.length === 0) {
-    return [];
-  }
-
-  const filePath = path.join(csvDir, files[0]);
+function parseSingleCSV(filePath: string): WordEntry[] {
   let content = fs.readFileSync(filePath, "utf-8");
 
   // Strip UTF-8 BOM
@@ -83,4 +75,14 @@ export function parseCSV(): WordEntry[] {
       ),
     };
   });
+}
+
+export function parseAllCSVs(): CSVFile[] {
+  const csvDir = path.join(process.cwd(), "words_csv");
+  const files = fs.readdirSync(csvDir).filter((f) => f.endsWith(".csv"));
+
+  return files.map((f) => ({
+    name: f.replace(/\.csv$/i, ""),
+    words: parseSingleCSV(path.join(csvDir, f)),
+  }));
 }
